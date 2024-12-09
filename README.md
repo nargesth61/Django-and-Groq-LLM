@@ -20,7 +20,7 @@ A simple API project that uses a test to receive a file, store its summary in a 
 ## **Installation and launch of the project**
 
 ### 1. Cloning the repository
-```bash
+
 git clone https://github.com/nargesth61/Django-and-Groq-LLM.git
 cd <project-directory>
 
@@ -31,7 +31,7 @@ docker-compose run web bash
 python manage.py makemigrations
 python manage.py migrate
 
-# **Endpoints**
+## **Endpoints**
 
 ## **1. Upload File **
 - **URL**: `http://localhost:8000/api/upload/`
