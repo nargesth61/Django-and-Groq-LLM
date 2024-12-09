@@ -43,3 +43,38 @@ python manage.py migrate
 - **Method**: `GET`
 - **Description**: This endpoint return list of file data with summary for user.
 
+### **How ​​to use Groq API key**
+
+To use Groq APIs, you need to obtain a valid API key from the Groq service. This key will allow you to send requests to the API.
+
+---
+
+### **Steps to obtain and use API key**
+
+#### **1. Obtain API key**
+- Log in to the [Groq console](https://console.groq.com/).
+- Create an account or log in to your account.
+- In the Settings section, go to the API Keys section.
+- Create a new key and save it.
+
+---
+
+#### **2. Add key to project**
+To use the API key in your project, follow these steps:
+
+1. **Save key in environment file (`.env`)**
+In your `.env` file, add the key as follows:
+```plaintext
+GROQ_API_KEY=<your-api-key>
+#### **3. Send file**
+ response = requests.post(
+                groq_api_url,
+                json={
+                    "model": "llama3-8b-8192", 
+                    "messages": [{
+                        "role": "user",
+                        "content": content
+                    }]
+                },
+                headers={"Authorization": f"Bearer {api_key}"}
+            )
