@@ -22,6 +22,7 @@ A simple API project that uses a test to receive a file, store its summary in a 
 ### 1. Cloning the repository
 
 git clone https://github.com/nargesth61/Django-and-Groq-LLM.git
+
 cd <project-directory>
 
 docker-compose up --build
