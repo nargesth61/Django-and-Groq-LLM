@@ -1,0 +1,3 @@
+This is a test file. The purpose of this file is to test the file upload functionality of the API.
+The file should contain plain text that can be processed and summarized.
+Once the file is uploaded, the Groq API will generate a summary of the content.

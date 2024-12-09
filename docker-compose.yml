@@ -9,4 +9,4 @@ services:
     ports:
       - "8000:8000"
     environment:
-      - DJANGO_ENV=development
+      - GROQ_API_KEY=${GROQ_API_KEY}
