@@ -10,6 +10,8 @@ import logging
 logger = logging.getLogger(__name__)
 
 class UploadFileAPIView(APIView):
+
+    # Using MultiPartParser to process multipart files
     parser_classes = [MultiPartParser]
 
     def post(self, request):
@@ -18,7 +20,8 @@ class UploadFileAPIView(APIView):
             if not file:
                 logger.error("No file uploaded")
                 return JsonResponse({"error": "No file uploaded"}, status=400)
-
+            
+            # Read content from file as text (utf-8)
             content = file.read().decode('utf-8')
             groq_api_url = "https://api.groq.com/openai/v1/chat/completions"
             api_key = request.environ.get('GROQ_API_KEY')
@@ -27,11 +30,10 @@ class UploadFileAPIView(APIView):
                 logger.error("API key is missing")
                 return JsonResponse({"error": "API key is missing"}, status=500)
 
-            # درخواست به Groq API با استفاده از 'messages' به جای 'text'
             response = requests.post(
                 groq_api_url,
                 json={
-                    "model": "llama3-8b-8192",  # این مدل را با مدل مورد نظر خود جایگزین کنید
+                    "model": "llama3-8b-8192", 
                     "messages": [{
                         "role": "user",
                         "content": content
@@ -49,7 +51,7 @@ class UploadFileAPIView(APIView):
                 logger.error("Groq API response did not contain summary")
                 return JsonResponse({"error": "Failed to retrieve summary"}, status=500)
 
-            # ذخیره در پایگاه داده
+           
             uploaded_file = UploadedFile.objects.create(name=file.name, summary=summary)
 
             return JsonResponse({
@@ -64,3 +66,12 @@ class UploadFileAPIView(APIView):
         except Exception as e:
             logger.exception("An unexpected error occurred")
             return JsonResponse({"error": str(e)}, status=500)
+        
+class FileHistoryAPIView(APIView):
+    def get(self, request):
+        files = UploadedFile.objects.all()
+        data = [
+            {"name": file.name, "uploaded_at": file.uploaded_at, "summary": file.summary}
+            for file in files
+        ]
+        return JsonResponse(data, safe=False)
